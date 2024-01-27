@@ -16,46 +16,49 @@ interface Env {
   KV: KVNamespace;
 }
 
+const defaultStats = {
+  totalGuilds: 3792,
+  totalChannels: 109767,
+  totalMembers: 629895,
+  totalStatsSent: {
+    total: 197555,
+    games: {
+      "Battlefield 2042": 46303,
+      "Battlefield V": 69848,
+      "Battlefield 1": 32404,
+      "Battlefield Hardline": 1808,
+      "Battlefield 4": 36961,
+      "Battlefield 3": 5015,
+      "Battlefield Bad Company 2": 364,
+      "Battlefield 2": 282,
+    },
+    languages: {
+      English: 129743,
+      French: 5064,
+      Italian: 909,
+      German: 4661,
+      Spanish: 4066,
+      Russian: 4738,
+      Polish: 4354,
+      "Brazilian Portuguese": 6025,
+      Turkish: 1890,
+      Swedish: 748,
+      Norwegian: 162,
+      Finnish: 391,
+      Arabic: 196,
+    },
+  },
+  lastUpdated: {
+    date: "Sat, 27 Jan 2024 22:43:16 GMT",
+    timestampMilliseconds: 1706395396933,
+    timestampSeconds: 1706395396,
+  },
+};
+
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.env as Env;
-  const stats = (await env.KV?.get("STATS", "json")) ?? {
-    totalGuilds: 3792,
-    totalChannels: 109767,
-    totalMembers: 629895,
-    totalStatsSent: {
-      total: 197555,
-      games: {
-        "Battlefield 2042": 46303,
-        "Battlefield V": 69848,
-        "Battlefield 1": 32404,
-        "Battlefield Hardline": 1808,
-        "Battlefield 4": 36961,
-        "Battlefield 3": 5015,
-        "Battlefield Bad Company 2": 364,
-        "Battlefield 2": 282,
-      },
-      languages: {
-        English: 129743,
-        French: 5064,
-        Italian: 909,
-        German: 4661,
-        Spanish: 4066,
-        Russian: 4738,
-        Polish: 4354,
-        "Brazilian Portuguese": 6025,
-        Turkish: 1890,
-        Swedish: 748,
-        Norwegian: 162,
-        Finnish: 391,
-        Arabic: 196,
-      },
-    },
-    lastUpdated: {
-      date: "Sat, 27 Jan 2024 22:43:16 GMT",
-      timestampMilliseconds: 1706395396933,
-      timestampSeconds: 1706395396,
-    },
-  };
+  const stats =
+    (await env.KV?.get<typeof defaultStats>("STATS", "json")) ?? defaultStats;
   return json({ stats });
 };
 
