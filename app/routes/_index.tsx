@@ -1,4 +1,5 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/cloudflare";
+import { useLoaderData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -7,10 +8,26 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+interface Env {
+  KV: KVNamespace
+}
+
+export const loader = async ({ context }: LoaderFunctionArgs) => {
+  const env = context.env as Env;
+  const all = await env.KV.list();
+  return json({ all });
+  
+}
+
 export default function Index() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Welcome to Remix</h1>
+      <code>
+      {JSON.stringify(data)}
+      </code>
       <ul>
         <li>
           <a

@@ -1,9 +1,12 @@
 node_modules
 
 /.cache
-/functions/\[\[path\]\].js
-/functions/\[\[path\]\].js.map
-/functions/metafile.*
-/functions/version.txt
+# /functions/\[\[path\]\].js
+# /functions/\[\[path\]\].js.map
+# /functions/metafile.*
+# /functions/version.txt
+/functions
 /public/build
 .dev.vars
+
+/.wrangler
