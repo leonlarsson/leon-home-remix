@@ -18,7 +18,7 @@ interface Env {
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.env as Env;
-  const stats = (await env.KV?.get("STATS")) ?? {
+  const stats = (await env.KV?.get("STATS", "json")) ?? {
     totalGuilds: 3792,
     totalChannels: 109767,
     totalMembers: 629895,
