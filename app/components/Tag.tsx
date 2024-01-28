@@ -8,7 +8,7 @@ export default function Tag({
   clickable?: boolean;
 }) {
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(useSearchParams().toString());
+  const [searchParams] = useSearchParams();
   const searchMatchesTag =
     searchParams.get("search")?.toLowerCase() === tag.toLowerCase();
 
