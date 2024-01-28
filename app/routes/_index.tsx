@@ -1,78 +1,220 @@
-import {
-  json,
-  type LoaderFunctionArgs,
-  type MetaFunction,
-} from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import Icons from "~/components/icons";
+import { Link } from "@remix-run/react";
+import GradientBorder from "~/components/GradientBorder";
+import { Project } from "~/components/ProjectsGrid";
+import projects from "~/data/projects";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
-interface Env {
-  KV: KVNamespace;
-}
-
-const defaultStats = {
-  totalGuilds: 3792,
-  totalChannels: 109767,
-  totalMembers: 629895,
-  totalStatsSent: {
-    total: 197555,
-    games: {
-      "Battlefield 2042": 46303,
-      "Battlefield V": 69848,
-      "Battlefield 1": 32404,
-      "Battlefield Hardline": 1808,
-      "Battlefield 4": 36961,
-      "Battlefield 3": 5015,
-      "Battlefield Bad Company 2": 364,
-      "Battlefield 2": 282,
-    },
-    languages: {
-      English: 129743,
-      French: 5064,
-      Italian: 909,
-      German: 4661,
-      Spanish: 4066,
-      Russian: 4738,
-      Polish: 4354,
-      "Brazilian Portuguese": 6025,
-      Turkish: 1890,
-      Swedish: 748,
-      Norwegian: 162,
-      Finnish: 391,
-      Arabic: 196,
-    },
-  },
-  lastUpdated: {
-    date: "Sat, 27 Jan 2024 22:43:16 GMT",
-    timestampMilliseconds: 1706395396933,
-    timestampSeconds: 1706395396,
-  },
-};
-
-export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = context.env as Env;
-  const stats =
-    (await env.KV?.get<typeof defaultStats>("STATS", "json")) ?? defaultStats;
-  return json({ stats });
-};
-
-export default function Index() {
-  const data = useLoaderData<typeof loader>();
-
+export default function Home() {
   return (
-    <div className="p-2">
-      <h1 className="text-3xl font-bold">Welcome to Remix + Cloudflare</h1>
-      <div className="flex flex-col gap-2 flex-wrap">
-        <span>Here is some data directly from Cloudflare KV.</span>
-        <code className="whitespace-pre text-sm bg-neutral-800 p-1 rounded text-white h-80 overflow-y-scroll">
-          {JSON.stringify(data, null, 2)}
-        </code>
+    <div className="mx-auto max-w-3xl pb-10 text-start">
+      <div className="mb-6 flex items-center gap-4">
+        {/* <GradientBorder rounded="rounded-full" padding="p-1">IMAGE</GradientBorder> */}
+        <img
+          className="h-full select-none rounded-[100px] shadow transition-all hover:rounded-l-[10px] hover:shadow-lg active:translate-x-1 max-md:w-[50px]"
+          src="/assets/images/avatar.png"
+          alt="Leon"
+          width={130}
+          height={130}
+          draggable={false}
+        />
+
+        <div className="flex flex-col gap-1 max-md:gap-0">
+          <span className="text-4xl font-extrabold leading-none transition-all max-md:text-xl">
+            Leon San José Larsson
+          </span>
+          <span className="text-xl transition-all max-md:text-sm">
+            Community & Support Specialist @{" "}
+            <a
+              href="https://sharkmob.com"
+              target="_blank"
+              rel="noreferrer"
+              className="link font-normal"
+              draggable={false}
+            >
+              Sharkmob
+            </a>
+          </span>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6">
+        {/* WORK */}
+        <div>
+          I currently work as the Community & Support Specialist at{" "}
+          <Link
+            to="https://sharkmob.com"
+            target="_blank"
+            rel="noreferrer"
+            className="link inline-flex items-baseline"
+            draggable={false}
+          >
+            <span>Sharkmob</span>
+          </Link>
+          , where I manage player support, Bloodhunt&apos;s website, and assist
+          the player relations and marketing teams.
+        </div>
+
+        {/* DEV */}
+        <div>
+          I&apos;m an aspiring Full Stack Engineer in self-training. My primary
+          areas of interest are web development and Discord bots. I also
+          extensively work on creating various APIs and services on platforms
+          such as Cloudflare Workers. Feel free to{" "}
+          <Link to="/projects" className="link">
+            browse all my projects!
+          </Link>
+        </div>
+
+        {/* COMMUNITY */}
+        <div>
+          Some of my other interests include community building and community
+          management. I&apos;ve been building communities on Discord since 2016,
+          including moderating and eventually co-owning the biggest{" "}
+          <Link
+            to="/projects/battlefield-discord"
+            className="link whitespace-nowrap"
+          >
+            Battlefield Discord
+          </Link>
+          .
+        </div>
+
+        {/* MUSIC - DISABLED */}
+        {/* <div>
+          <Link href="/music" className="link">
+            I am currently listening to:
+          </Link>
+
+          <Suspense fallback={<CurrentTrackSkeleton compact />}>
+            <SpotifyCurrentTrack compact alwaysRender reloadOnEnd />
+          </Suspense>
+        </div> */}
+
+        {/* GUESTBOOK */}
+        <div>
+          <Icons.pencil className="mr-2 inline size-5" />
+          Feel free to{" "}
+          <Link to="/guestbook" className="link">
+            sign my guestbook!
+          </Link>
+        </div>
+
+        {/* CONNECT */}
+        <div className="flex flex-col gap-1">
+          <span className="text-xl font-semibold">Connect with me</span>
+          <div className="grid grid-cols-1 gap-2 min-[370px]:grid-cols-2 sm:grid-cols-3">
+            {[
+              {
+                title: "Email",
+                url: "mailto:leonlarsson8@gmail.com",
+                icon: <Icons.envelope className="me-2 inline size-5" />,
+              },
+              {
+                title: "LinkedIn",
+                url: "https://www.linkedin.com/in/leonlarsson/",
+                icon: <Icons.linkedin className="me-2 inline size-5" />,
+              },
+              {
+                title: "GitHub",
+                url: "https://github.com/leonlarsson",
+                icon: <Icons.github className="me-2 inline size-5" />,
+              },
+              {
+                title: "X / Twitter",
+                url: "https://x.com/MozzyFX",
+                icon: <Icons.twitterX className="me-2 inline size-5" />,
+              },
+              {
+                title: "Twitter 2",
+                url: "https://bsky.app/profile/leon.ms",
+                icon: <Icons.bluesky className="me-2 inline size-5" />,
+              },
+              {
+                title: "Twitter 3",
+                url: "https://www.threads.net/@leonsjlarsson",
+                icon: <Icons.threads className="me-2 inline size-5" />,
+              },
+              {
+                title: "Instagram",
+                url: "https://www.instagram.com/leonsjlarsson/",
+                icon: <Icons.instagram className="me-2 inline size-5" />,
+              },
+              {
+                title: "ArtStation",
+                url: "https://www.artstation.com/leonlarsson",
+                icon: <Icons.artstation className="me-2 inline size-5" />,
+              },
+            ].map(({ title, url, icon }) => (
+              <GradientBorder
+                key={title}
+                rounded="rounded-[6px]"
+                padding="p-[2px]"
+                hoverable
+              >
+                <Link
+                  to={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded bg-slate-100 p-2 dark:bg-kinda-black"
+                >
+                  <div className="flex items-center">
+                    {icon}
+                    <span>{title}</span>
+                  </div>
+                  <Icons.externallink />
+                </Link>
+              </GradientBorder>
+            ))}
+          </div>
+        </div>
+
+        {/* CV */}
+        <div className="flex flex-col gap-1">
+          <span className="mt-2 text-xl font-semibold">
+            Want to learn more?
+          </span>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {[
+              { title: "Open English CV", url: "/en/cv" },
+              { title: "Öppna svenskt CV", url: "/sv/cv" },
+            ].map(({ title, url }) => (
+              <GradientBorder
+                key={title}
+                rounded="rounded-[6px]"
+                padding="p-[2px]"
+                hoverable
+              >
+                <Link
+                  to={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-between rounded bg-slate-100 p-2 dark:bg-kinda-black"
+                >
+                  <div className="flex items-center">
+                    <Icons.file className="me-2 inline size-5" />
+                    <span>{title}</span>
+                  </div>
+                  <Icons.externallink />
+                </Link>
+              </GradientBorder>
+            ))}
+          </div>
+        </div>
+
+        {/* FEATURED PROJECTS */}
+        <div className="flex flex-col gap-1">
+          <span className="mt-2 text-xl font-semibold">
+            Featured{" "}
+            <Link to="/projects" className="link font-semibold">
+              projects
+            </Link>
+          </span>
+          <div className="flex flex-col gap-2">
+            <Project project={projects[17]} displayTags={false} />
+            <Project project={projects[7]} displayTags={false} />
+            <Project project={projects[15]} displayTags={false} />
+          </div>
+        </div>
       </div>
     </div>
   );

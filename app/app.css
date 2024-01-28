@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+}
+
+@layer components {
+  .link {
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .button-with-border {
+    @apply select-none rounded border border-black p-2 text-black transition-colors hover:bg-black hover:text-white dark:border-kinda-white/50 dark:text-kinda-white dark:hover:border-kinda-white dark:hover:bg-kinda-black;
+  }
+
+  .text-input {
+    @apply text-input-base border border-black/50 transition-colors focus:border-black dark:border-kinda-white/50 dark:focus:border-kinda-white;
+  }
+
+  .text-input-base {
+    @apply rounded bg-white p-2 shadow outline-none dark:bg-kinda-black;
+  }
+}
