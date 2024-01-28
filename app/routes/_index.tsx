@@ -1,9 +1,10 @@
-import Icons from "~/components/icons";
 import { Link } from "@remix-run/react";
+import { MetaFunction } from "@remix-run/cloudflare";
+import Icons from "~/components/icons";
+import TypeAnimationComponent from "~/components/TypeAnimation";
 import GradientBorder from "~/components/GradientBorder";
 import { Project } from "~/components/ProjectsGrid";
 import projects from "~/data/projects";
-import { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => [
   {
@@ -45,6 +46,19 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col gap-6">
+        <div>
+          👋{" "}
+          <TypeAnimationComponent
+            cursor={false}
+            deletionSpeed={1}
+            sequence={[
+              "Hello there!",
+              2000,
+              "Hello, I am Leon San José Larsson.",
+            ]}
+          />
+        </div>
+
         {/* WORK */}
         <div>
           I currently work as the Community & Support Specialist at{" "}
