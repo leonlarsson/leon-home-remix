@@ -3,6 +3,13 @@ import { Link } from "@remix-run/react";
 import GradientBorder from "~/components/GradientBorder";
 import { Project } from "~/components/ProjectsGrid";
 import projects from "~/data/projects";
+import { MetaFunction } from "@remix-run/cloudflare";
+
+export const meta: MetaFunction = () => [
+  {
+    title: "Leon San José Larsson",
+  },
+];
 
 export default function Home() {
   return (

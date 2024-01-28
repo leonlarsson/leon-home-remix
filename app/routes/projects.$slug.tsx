@@ -1,6 +1,6 @@
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
-import { Link, useLoaderData } from "@remix-run/react";
-import { Suspense } from "react";
+import { MetaFunction } from "@remix-run/cloudflare";
+import { Link, useNavigate, useParams } from "@remix-run/react";
+import { Suspense, useEffect } from "react";
 import GradientBorder from "~/components/GradientBorder";
 import ProjectsGrid from "~/components/ProjectsGrid";
 import Tag from "~/components/Tag";
@@ -12,18 +12,40 @@ const getProject = (slug: string) =>
     project => project.slug === slug || project.slugAliases?.includes(slug)
   );
 
-export const loader = ({ params }: LoaderFunctionArgs) => {
-  const project = getProject(params.slug ?? "");
-  return { slug: params.slug ?? "", project };
+export const meta: MetaFunction = ({ params }) => {
+  const project = getProject(params.slug!);
+  return [
+    {
+      title: `${project?.name ?? "Project #404"} | Leon San José Larsson`,
+    },
+    {
+      name: "description",
+      content: project?.shortDescription ?? "You found Project #404.",
+    },
+  ];
 };
 
 export default function Project() {
-  const { slug, project } = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
+  const { slug } = useParams();
+  const project = getProject(slug!);
+
+  // If project was found and we are currently on a slug alias, redirect to the main slug
+  useEffect(() => {
+    if (project?.slugAliases?.includes(slug!))
+      navigate(`/projects/${project.slug}`, { replace: true });
+  }, [navigate, project, slug]);
 
   const previousProject =
     projects[projects.indexOf(projects.find(x => x.slug === slug)!) - 1];
   const nextProject =
     projects[projects.indexOf(projects.find(x => x.slug === slug)!) + 1];
+
+  const matchingProjects = projects.filter(
+    project =>
+      project.slug.includes(slug!) ||
+      project.slugAliases?.some(projectSlug => projectSlug.includes(slug!))
+  );
 
   return (
     <div className="pb-10 text-start">
@@ -214,36 +236,19 @@ export default function Project() {
           <div className="mb-3 text-center text-red-500 dark:text-red-400">
             Project{" "}
             <span className="rounded bg-black p-1 font-semibold text-white dark:bg-kinda-white dark:text-kinda-black">
-              {decodeURIComponent(slug)}
+              {decodeURIComponent(slug!)}
             </span>{" "}
             not found
           </div>
 
-          {/* List projects where the slug or one of the slug aliases match the param */}
-          {projects.filter(
-            project =>
-              project.slug.includes(slug) ||
-              project.slugAliases?.some(slug => slug.includes(slug))
-          ).length > 0 && (
+          {matchingProjects.length > 0 && (
             <div
               className={`mx-auto self-center ${
-                projects.filter(
-                  project =>
-                    project.slug.includes(slug) ||
-                    project.slugAliases?.some(slug => slug.includes(slug))
-                ).length === 1
-                  ? "max-w-3xl"
-                  : ""
+                matchingProjects.length === 1 ? "max-w-3xl" : ""
               }`}
             >
               <div className="text-center">Maybe you were looking for:</div>
-              <ProjectsGrid
-                projects={projects.filter(
-                  project =>
-                    project.slug.includes(slug) ||
-                    project.slugAliases?.some(slug => slug.includes(slug))
-                )}
-              />
+              <ProjectsGrid projects={matchingProjects} />
             </div>
           )}
         </div>

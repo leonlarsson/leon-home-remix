@@ -29,7 +29,7 @@ export default function App() {
         <Links />
       </head>
 
-      <body>
+      <body className="overflow-y-scroll">
         <div
           className={`min-h-[100svh] bg-gradient-to-bl from-white to-slate-200 text-black dark:from-kinda-black dark:to-kinda-black dark:text-kinda-white`}
         >
