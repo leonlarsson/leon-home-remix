@@ -16,7 +16,7 @@ export default function Search() {
           const value = e.target.value;
           // If value is not empty, set searchParam. Otherwise, remove the searchParam. Then replace the URL params
           value.trim().length
-            ? searchParams.set("search", value.trim())
+            ? searchParams.set("search", value)
             : searchParams.delete("search");
           setSearchParams(searchParams);
         }}
