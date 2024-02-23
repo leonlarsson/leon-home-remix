@@ -24,7 +24,7 @@ export default function App() {
         <link
           rel="preload"
           as="font"
-          href="/assets/fonts/InterVariable.ttf"
+          href="/assets/fonts/InterVariableV3.ttf"
           crossOrigin="anonymous"
         />
         <Meta />
