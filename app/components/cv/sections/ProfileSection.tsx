@@ -58,6 +58,7 @@ export const ProfileSection = ({
                   }{" "}
                   {data.location.timezone && (
                     <CurrentTime
+                      key={locale}
                       locale={locale}
                       timeZone={data.location.timezone}
                     />
