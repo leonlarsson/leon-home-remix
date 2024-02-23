@@ -1,11 +1,12 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        sans: "Inter",
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         "kinda-black": "#0e1011",
