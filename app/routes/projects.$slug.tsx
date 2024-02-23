@@ -9,7 +9,7 @@ import projects from "~/data/projects";
 
 const getProject = (slug: string) =>
   projects.find(
-    project => project.slug === slug || project.slugAliases?.includes(slug)
+    project => project.slug === slug || project.slugAliases?.includes(slug),
   );
 
 export const meta: MetaFunction = ({ params }) => {
@@ -44,7 +44,7 @@ export default function Project() {
   const matchingProjects = projects.filter(
     project =>
       project.slug.includes(slug!) ||
-      project.slugAliases?.some(projectSlug => projectSlug.includes(slug!))
+      project.slugAliases?.some(projectSlug => projectSlug.includes(slug!)),
   );
 
   return (
@@ -101,7 +101,7 @@ export default function Project() {
             {typeof project.description === "string" ? (
               <p>{project.description}</p>
             ) : (
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-3">
                 {project.description.map((text, i) => (
                   <p key={i}>{text}</p>
                 ))}
