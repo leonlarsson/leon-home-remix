@@ -69,6 +69,13 @@ export default function Home() {
             className="link inline-flex items-baseline"
             draggable={false}
           >
+            <img
+              src={"/assets/images/smlogo_notext.png"}
+              alt="Sharkmob logo"
+              width={16}
+              height={16}
+              className="mx-1 self-center"
+            />
             <span>Sharkmob</span>
           </Link>
           , where I manage player support, Bloodhunt&apos;s website, and assist
