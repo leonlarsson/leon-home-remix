@@ -1,3 +1,5 @@
+import { guestbookEntries } from "lib/db/schema";
+
 export type Project = {
   slug: string;
   slugAliases?: string[];
@@ -20,15 +22,7 @@ export type Project = {
   displayInCv?: boolean;
 };
 
-export type Entry = {
-  id: number;
-  date: string;
-  body: string;
-  name: string | null;
-  email: string | null;
-  edited_at: string | null;
-  deleted_at: string | null;
-};
+export type Entry = typeof guestbookEntries.$inferSelect;
 
 export type Post = {
   id: number;

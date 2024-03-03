@@ -13,9 +13,12 @@
     "typegen": "wrangler types"
   },
   "dependencies": {
+    "@2toad/profanity": "^2.2.0",
+    "@planetscale/database": "^1.16.0",
     "@remix-run/cloudflare": "^2.7.2",
     "@remix-run/cloudflare-pages": "^2.7.2",
     "@remix-run/react": "^2.7.2",
+    "drizzle-orm": "^0.29.4",
     "isbot": "^4.1.0",
     "miniflare": "^3.20231030.4",
     "react": "^18.2.0",
